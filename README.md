@@ -87,15 +87,14 @@ CampusAI/
 │── .env.example             # Example environment configuration
 │── README.md                # Comprehensive project documentation
 │
-├── pages/                   # Streamlit UI Views
-│   ├── __init__.py
-│   ├── home.py              # Dashboard & overview
-│   ├── chatbot.py           # RAG College Assistant chat
-│   ├── study_planner.py     # AI Timetable generator
-│   ├── quiz_generator.py    # Interactive MCQ test generator
-│   ├── summarizer.py        # Circular & Notice summarizer
-│   ├── profile.py           # Student profile SQLite manager
-│   └── about.py             # Architecture & viva documentation
+├── pages/                   # Streamlit Official Multipage Views
+│   ├── 1_Home.py            # Dashboard & overview
+│   ├── 2_College_Assistant.py # RAG College Assistant chat
+│   ├── 3_Study_Planner.py   # AI Timetable generator
+│   ├── 4_Quiz_Generator.py  # Interactive MCQ test generator
+│   ├── 5_Notice_Summarizer.py # Circular & Notice summarizer
+│   ├── 6_Student_Profile.py # Student profile SQLite manager
+│   └── 7_About.py           # Architecture & viva documentation
 │
 ├── rag/                     # Retrieval-Augmented Generation Engine
 │   ├── __init__.py
