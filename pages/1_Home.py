@@ -180,5 +180,4 @@ def main():
             st.markdown("No recent activities recorded. Start exploring with the assistant above!")
 
 
-if __name__ == "__main__" or True:
-    main()
+main()

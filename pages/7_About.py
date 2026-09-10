@@ -107,5 +107,4 @@ def main():
     st.caption("CampusAI • Final Year Project • Built with Streamlit, LangChain, Google Gemini, ChromaDB & SQLite")
 
 
-if __name__ == "__main__" or True:
-    main()
+main()

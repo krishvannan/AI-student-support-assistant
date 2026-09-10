@@ -140,5 +140,4 @@ def main():
                     )
 
 
-if __name__ == "__main__" or True:
-    main()
+main()
