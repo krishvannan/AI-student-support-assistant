@@ -1,0 +1,196 @@
+/* ===================================================
+   CampusAI - Modern University Theme Stylesheet
+   =================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+    --primary: #1e40af;
+    --primary-dark: #0f2b48;
+    --primary-light: #3b82f6;
+    --secondary: #0d9488;
+    --accent: #f59e0b;
+    --bg-light: #f8fafc;
+    --card-bg: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+/* Base App Overrides */
+html, body, [class*="css"] {
+    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Header Banner */
+.campus-header {
+    background: linear-gradient(135deg, #0f2b48 0%, #1e40af 60%, #3b82f6 100%);
+    padding: 2.2rem 2.5rem;
+    border-radius: var(--radius-lg);
+    color: #ffffff;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 25px -5px rgba(30, 64, 175, 0.25);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.campus-header h1 {
+    color: #ffffff !important;
+    font-weight: 800;
+    font-size: 2.2rem;
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+.campus-header p {
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+}
+
+/* Feature Cards */
+.feature-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    transition: all 0.25s ease-in-out;
+    box-shadow: var(--shadow-sm);
+    height: 100%;
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: #93c5fd;
+}
+
+.feature-card .icon-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: #eff6ff;
+    color: #1e40af;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+}
+
+.feature-card p {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    line-height: 1.5;
+}
+
+/* Student Profile Pill / Banner */
+.student-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #065f46;
+    padding: 0.4rem 0.9rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Source Citation Card */
+.source-citation-card {
+    background: #f8fafc;
+    border-left: 4px solid #3b82f6;
+    border-top: 1px solid #e2e8f0;
+    border-right: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    margin-top: 0.6rem;
+    margin-bottom: 0.6rem;
+    font-size: 0.88rem;
+}
+
+.source-title {
+    font-weight: 700;
+    color: #1e40af;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.source-excerpt {
+    color: #475569;
+    font-style: italic;
+    margin-top: 0.3rem;
+    font-size: 0.82rem;
+}
+
+/* Quiz UI Components */
+.quiz-question-box {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.quiz-explanation-box {
+    background: #eff6ff;
+    border-left: 4px solid #2563eb;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+}
+
+/* Notice Action Items */
+.action-item-pill {
+    display: inline-block;
+    background: #fef3c7;
+    color: #92400e;
+    font-weight: 600;
+    font-size: 0.8rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    margin-right: 0.4rem;
+}
+
+/* Quick Stats Bar */
+.stat-box {
+    text-align: center;
+    padding: 1rem;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.stat-number {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #1e40af;
+}
+
+.stat-label {
+    font-size: 0.82rem;
+    color: #64748b;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
