@@ -3,19 +3,23 @@ Notice Summarizer Page for CampusAI.
 Summarizes administrative circulars, extracts deadlines, important dates, and action items.
 """
 
+import sys
 from pathlib import Path
 import streamlit as st
+
+# Add project root to sys.path
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 from tools.summarizer import NoticeSummarizerTool
 from rag.loader import PDFDocumentLoader
 from utils.config import DOCUMENTS_DIR
-from utils.helpers import render_header, load_css
+from utils.helpers import setup_page
 
 
-def render_summarizer_page():
-    """Render the Notice Summarizer page."""
-    load_css()
-
-    render_header(
+def main():
+    setup_page(
         title="College Notice & Circular Summarizer",
         subtitle="Extract key highlights, critical deadlines, and actionable student checklists from circulars",
         icon="📄"
@@ -104,3 +108,7 @@ def render_summarizer_page():
                 """,
                 unsafe_allow_html=True
             )
+
+
+if __name__ == "__main__" or True:
+    main()

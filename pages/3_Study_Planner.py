@@ -3,24 +3,30 @@ AI Study Planner Page for CampusAI.
 Generates personalized exam study schedules, priority matrices, and revision plans.
 """
 
+import sys
+from pathlib import Path
 from datetime import date, timedelta
 import streamlit as st
+
+# Add project root to sys.path
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 from memory.student_memory import StudentMemory
 from tools.study_planner import StudyPlannerTool
 from database.sqlite_db import get_recent_study_plans
-from utils.helpers import render_header, load_css
+from utils.helpers import setup_page
 
 
-def render_study_planner_page():
-    """Render the AI Study Planner page."""
-    load_css()
-    profile = StudentMemory.get_profile()
-
-    render_header(
+def main():
+    setup_page(
         title="AI Study Planner",
         subtitle="Generate intelligent revision roadmaps, subject priority matrices, and daily timetables",
         icon="📅"
     )
+
+    profile = StudentMemory.get_profile()
 
     tab_create, tab_saved = st.tabs(["✨ Generate New Study Plan", "📂 View Saved Plans"])
 
@@ -132,3 +138,7 @@ def render_study_planner_page():
                         file_name=f"StudyPlan_{plan.exam_date}.md",
                         key=f"dl_plan_{plan.id}"
                     )
+
+
+if __name__ == "__main__" or True:
+    main()

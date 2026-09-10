@@ -3,25 +3,31 @@ AI Quiz Generator Page for CampusAI.
 Generates test-standard MCQs with an interactive test-taking mode, automated grading, and explanations.
 """
 
+import sys
+from pathlib import Path
 from typing import List, Dict, Any
 import streamlit as st
+
+# Add project root to sys.path
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 from memory.student_memory import StudentMemory
 from tools.quiz_generator import QuizGeneratorTool
 from rag.loader import PDFDocumentLoader
 from database.sqlite_db import get_recent_quizzes
-from utils.helpers import render_header, load_css
+from utils.helpers import setup_page
 
 
-def render_quiz_page():
-    """Render the interactive Quiz Generator page."""
-    load_css()
-    profile = StudentMemory.get_profile()
-
-    render_header(
+def main():
+    setup_page(
         title="AI Quiz & Assessment Generator",
         subtitle="Generate rigorous multiple choice practice exams with instant grading and explanations",
         icon="📝"
     )
+
+    profile = StudentMemory.get_profile()
 
     tab_test, tab_history = st.tabs(["🎯 Take Practice Quiz", "📊 Performance History"])
 
@@ -208,3 +214,7 @@ def render_quiz_page():
                     """,
                     unsafe_allow_html=True
                 )
+
+
+if __name__ == "__main__" or True:
+    main()

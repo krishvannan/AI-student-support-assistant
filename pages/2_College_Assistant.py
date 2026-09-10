@@ -3,29 +3,35 @@ AI College Assistant (RAG) Page for CampusAI.
 Provides interactive conversational Q&A with document citations, PDF upload, and student memory personalization.
 """
 
+import sys
+from pathlib import Path
 import streamlit as st
+
+# Add project root to sys.path
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 from rag.retriever import CollegeAssistantRAG
 from rag.loader import PDFDocumentLoader
 from rag.splitter import DocumentSplitter
 from rag.vectorstore import get_vector_store
 from memory.student_memory import StudentMemory
 from database.sqlite_db import get_chat_history, clear_chat_history
-from utils.config import DOCUMENTS_DIR, is_api_key_set
-from utils.helpers import render_header, load_css
+from utils.config import DOCUMENTS_DIR
+from utils.helpers import setup_page
 
 
-def render_chatbot_page():
-    """Render the AI College Assistant RAG chat page."""
-    load_css()
-    profile = StudentMemory.get_profile()
-    vector_store = get_vector_store()
-    rag_engine = CollegeAssistantRAG(session_id="student_session")
-
-    render_header(
+def main():
+    setup_page(
         title="AI College Assistant",
         subtitle="Ask questions about university policies, syllabus, exam timetables, and notices",
         icon="💬"
     )
+
+    profile = StudentMemory.get_profile()
+    vector_store = get_vector_store()
+    rag_engine = CollegeAssistantRAG(session_id="student_session")
 
     # Top Control Bar: Document Drawer & Memory Toggle
     with st.expander("📂 Document Management & Settings", expanded=False):
@@ -178,3 +184,7 @@ def render_chatbot_page():
                             )
 
         st.rerun()
+
+
+if __name__ == "__main__" or True:
+    main()

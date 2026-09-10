@@ -3,15 +3,20 @@ About Page for CampusAI.
 Presents architecture documentation, tech stack breakdown, and viva presentation notes for college examiners.
 """
 
+import sys
+from pathlib import Path
 import streamlit as st
-from utils.helpers import render_header, load_css
+
+# Add project root to sys.path
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from utils.helpers import setup_page
 
 
-def render_about_page():
-    """Render the About & Project Viva Guide page."""
-    load_css()
-
-    render_header(
+def main():
+    setup_page(
         title="About CampusAI Project",
         subtitle="System architecture, technological framework, and college project viva documentation",
         icon="ℹ️"
@@ -22,8 +27,8 @@ def render_about_page():
         """
 ```
 +---------------------------------------------------------------------------------------+
-|                                    Streamlit Frontend                                 |
-|   [Home]  |  [Ask Assistant (RAG)]  |  [Study Planner]  |  [Quiz Generator]  | [Profile] |
+|                               Streamlit Multipage Frontend                            |
+|  [Home]  |  [College Assistant]  |  [Study Planner]  |  [Quiz Generator]  | [Profile] |
 +---------------------------------------------------------------------------------------+
                                            │
                                            ▼
@@ -50,7 +55,7 @@ def render_about_page():
     with col1:
         st.markdown(
             """
-            - **Frontend Framework**: Streamlit (Responsive web interface with university styling)
+            - **Frontend Framework**: Streamlit Multipage (Responsive web interface with university styling)
             - **AI Framework**: LangChain (RAG pipeline, prompt templates, retrieval chains)
             - **Large Language Model**: Google Gemini API (`gemini-1.5-flash` / `gemini-1.5-pro`)
             - **Text Embeddings**: Google `text-embedding-004` (768-dimensional dense vectors)
@@ -100,3 +105,7 @@ def render_about_page():
 
     st.markdown("---")
     st.caption("CampusAI • Final Year Project • Built with Streamlit, LangChain, Google Gemini, ChromaDB & SQLite")
+
+
+if __name__ == "__main__" or True:
+    main()

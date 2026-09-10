@@ -1,28 +1,34 @@
 """
 Home Page for CampusAI.
-Displays the university welcome dashboard, active student card, quick stats, and navigation tiles.
+Displays the university student dashboard, active profile snapshot, quick stats, and navigation cards.
 """
 
+import sys
+from pathlib import Path
 import streamlit as st
+
+# Add project root to sys.path
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 from memory.student_memory import StudentMemory
 from rag.vectorstore import get_vector_store
 from database.sqlite_db import get_recent_study_plans, get_recent_quizzes
-from utils.helpers import render_header, load_css
+from utils.helpers import setup_page
 
 
-def render_home_page():
-    """Render the main dashboard of CampusAI."""
-    load_css()
-    profile = StudentMemory.get_profile()
-    vector_store = get_vector_store()
-    doc_count = vector_store.get_document_count()
-    indexed_files = vector_store.get_indexed_files()
-
-    render_header(
+def main():
+    setup_page(
         title="CampusAI Student Dashboard",
         subtitle="Your personalized AI assistant for academic regulations, study planning, circulars, and exam prep",
         icon="🏛️"
     )
+
+    profile = StudentMemory.get_profile()
+    vector_store = get_vector_store()
+    doc_count = vector_store.get_document_count()
+    indexed_files = vector_store.get_indexed_files()
 
     # Student Overview Card & Quick Stats
     st.markdown("### 👤 Active Student Snapshot")
@@ -88,7 +94,7 @@ def render_home_page():
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Core Features Grid
+    # Core Features Navigation Grid
     st.markdown("### ⚡ AI Core Features")
     c1, c2, c3, c4 = st.columns(4)
 
@@ -104,8 +110,7 @@ def render_home_page():
             unsafe_allow_html=True
         )
         if st.button("Open Assistant →", key="btn_nav_assistant", use_container_width=True):
-            st.session_state["nav_page"] = "💬 Ask College Assistant"
-            st.rerun()
+            st.switch_page("pages/2_College_Assistant.py")
 
     with c2:
         st.markdown(
@@ -119,8 +124,7 @@ def render_home_page():
             unsafe_allow_html=True
         )
         if st.button("Create Plan →", key="btn_nav_planner", use_container_width=True):
-            st.session_state["nav_page"] = "📅 Study Planner"
-            st.rerun()
+            st.switch_page("pages/3_Study_Planner.py")
 
     with c3:
         st.markdown(
@@ -134,8 +138,7 @@ def render_home_page():
             unsafe_allow_html=True
         )
         if st.button("Generate Quiz →", key="btn_nav_quiz", use_container_width=True):
-            st.session_state["nav_page"] = "📝 Quiz Generator"
-            st.rerun()
+            st.switch_page("pages/4_Quiz_Generator.py")
 
     with c4:
         st.markdown(
@@ -149,8 +152,7 @@ def render_home_page():
             unsafe_allow_html=True
         )
         if st.button("Summarize Notice →", key="btn_nav_sum", use_container_width=True):
-            st.session_state["nav_page"] = "📄 Notice Summarizer"
-            st.rerun()
+            st.switch_page("pages/5_Notice_Summarizer.py")
 
     st.markdown("<br>", unsafe_allow_html=True)
 
@@ -176,3 +178,7 @@ def render_home_page():
             st.markdown(f"**Latest Quiz:** `{latest_quiz.topic}` - Score: **{latest_quiz.score}/{latest_quiz.total_questions}**")
         if not recent_plans and not recent_quizzes:
             st.markdown("No recent activities recorded. Start exploring with the assistant above!")
+
+
+if __name__ == "__main__" or True:
+    main()

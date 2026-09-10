@@ -3,24 +3,30 @@ Student Profile Page for CampusAI.
 Manages student information stored in SQLite, which drives conversational memory and personalized AI tools.
 """
 
+import sys
+from pathlib import Path
 from typing import List
 import streamlit as st
+
+# Add project root to sys.path
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 from memory.student_memory import StudentMemory
 from database.sqlite_db import save_or_update_profile
 from database.models import StudentProfile
-from utils.helpers import render_header, load_css
+from utils.helpers import setup_page
 
 
-def render_profile_page():
-    """Render the Student Profile management page."""
-    load_css()
-    profile = StudentMemory.get_profile()
-
-    render_header(
-        title="Student Profile & Personalization Memory",
+def main():
+    setup_page(
+        title="Student Profile & Memory",
         subtitle="Manage your academic records, enrolled subjects, and language preferences stored in SQLite",
         icon="👤"
     )
+
+    profile = StudentMemory.get_profile()
 
     col_form, col_preview = st.columns([1.2, 1])
 
@@ -102,3 +108,7 @@ def render_profile_page():
             3. **Multi-Turn Continuity**: When you ask *"What subjects should I prepare for?"*, the assistant knows you are in *Semester %s of %s* without having to re-ask.
             """ % (profile.semester, profile.department)
         )
+
+
+if __name__ == "__main__" or True:
+    main()
