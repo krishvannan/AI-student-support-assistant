@@ -1,72 +1,162 @@
 /* ===================================================
    CampusAI - Modern University Theme Stylesheet
+   Typography: Outfit, Manrope, Inter, System Sans-Serif
    =================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
 :root {
     --primary: #1e40af;
     --primary-dark: #0f2b48;
-    --primary-light: #3b82f6;
+    --primary-light: #2563eb;
+    --primary-subtle: #eff6ff;
     --secondary: #0d9488;
     --accent: #f59e0b;
     --bg-light: #f8fafc;
     --card-bg: #ffffff;
     --text-main: #0f172a;
-    --text-muted: #64748b;
+    --text-muted: #475569;
+    --text-light: #64748b;
     --border-color: #e2e8f0;
+    --border-focus: #3b82f6;
+    --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 16px;
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
-    --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+    --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+    --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+    --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.07), 0 2px 4px rgba(15, 23, 42, 0.05);
+    --font-family: 'Outfit', 'Manrope', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-/* Base App Overrides */
-html, body, [class*="css"] {
-    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+/* ===================================================
+   Universal Typography (Safe: Never Override Icons)
+   =================================================== */
+html, body, [class*="css"], [class*="st-"], [data-testid="stAppViewContainer"],
+[data-testid="stSidebar"], [data-testid="stHeader"], [data-testid="stToolbar"],
+p, h1, h2, h3, h4, h5, h6,
+button, input, textarea, select, label,
+.stMarkdown, .stButton, .stTextInput, .stTextArea,
+.stSelectbox, .stRadio, .stSlider, .stMetric,
+.feature-card, .stat-box, .campus-header, .source-citation-card,
+.student-snapshot-card, .quiz-question-box, .quiz-explanation-box {
+    font-family: var(--font-family);
 }
 
-/* Header Banner */
+/* Strictly protect Streamlit Material Icons & SVG Symbols from font overriding */
+[data-testid="stIconMaterial"],
+.material-symbols-rounded,
+.material-symbols-outlined,
+[class*="material-symbols"],
+[data-testid*="Icon"],
+[data-testid="stExpanderToggleIcon"] {
+    font-family: "Material Symbols Rounded", "Material Symbols Outlined" !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    line-height: 1 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    display: inline-block !important;
+    white-space: nowrap !important;
+    word-wrap: normal !important;
+    direction: ltr !important;
+    -webkit-font-feature-settings: 'liga' !important;
+    -webkit-font-smoothing: antialiased !important;
+}
+
+/* Main Container Spacing */
+.block-container {
+    padding-top: 1.8rem !important;
+    padding-bottom: 2.5rem !important;
+    max-width: 1200px !important;
+}
+
+/* ===================================================
+   Header Banner
+   =================================================== */
 .campus-header {
-    background: linear-gradient(135deg, #0f2b48 0%, #1e40af 60%, #3b82f6 100%);
-    padding: 2.2rem 2.5rem;
+    background: linear-gradient(135deg, #0f2b48 0%, #1e40af 100%);
+    padding: 1.6rem 2rem;
     border-radius: var(--radius-lg);
     color: #ffffff;
-    margin-bottom: 2rem;
-    box-shadow: 0 10px 25px -5px rgba(30, 64, 175, 0.25);
+    margin-bottom: 1.6rem;
+    box-shadow: 0 4px 18px -2px rgba(30, 64, 175, 0.2);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.campus-header .header-main {
+    flex: 1;
+    min-width: 0;
 }
 
 .campus-header h1 {
     color: #ffffff !important;
-    font-weight: 800;
-    font-size: 2.2rem;
-    margin: 0;
+    font-weight: 700 !important;
+    font-size: 1.85rem !important;
+    margin: 0 !important;
     letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    line-height: 1.25 !important;
 }
 
 .campus-header p {
-    color: #cbd5e1;
-    font-size: 1.05rem;
-    margin-top: 0.5rem;
-    margin-bottom: 0;
+    color: #cbd5e1 !important;
+    font-size: 0.95rem !important;
+    margin-top: 0.35rem !important;
+    margin-bottom: 0 !important;
+    font-weight: 400 !important;
+    line-height: 1.45 !important;
 }
 
-/* Feature Cards */
+.campus-header .header-student-card {
+    text-align: right;
+    font-size: 0.88rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.55rem 1.1rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    flex-shrink: 0;
+}
+
+.campus-header .header-student-name {
+    font-weight: 700;
+    color: #f8fafc;
+    font-size: 0.92rem;
+}
+
+.campus-header .header-student-meta {
+    color: #93c5fd;
+    font-size: 0.8rem;
+    margin-top: 0.15rem;
+}
+
+/* ===================================================
+   AI Core Features Cards - Strict Grid Alignment
+   =================================================== */
 .feature-card {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    padding: 1.5rem;
-    transition: all 0.25s ease-in-out;
+    padding: 1.35rem 1.25rem 1.25rem 1.25rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     box-shadow: var(--shadow-sm);
-    height: 100%;
+    height: 220px !important;
+    min-height: 220px !important;
+    max-height: 220px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    margin-bottom: 0.75rem;
 }
 
 .feature-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-2px);
     box-shadow: var(--shadow-md);
     border-color: #93c5fd;
 }
@@ -75,50 +165,186 @@ html, body, [class*="css"] {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
     background: #eff6ff;
     color: #1e40af;
-    font-size: 1.6rem;
-    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    margin-bottom: 0.75rem;
+    flex-shrink: 0;
 }
 
 .feature-card h3 {
-    font-size: 1.25rem;
+    font-size: 1.12rem;
     font-weight: 700;
     color: var(--text-main);
-    margin-bottom: 0.5rem;
+    margin: 0 0 0.4rem 0;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    flex-shrink: 0;
 }
 
 .feature-card p {
     color: var(--text-muted);
-    font-size: 0.92rem;
-    line-height: 1.5;
+    font-size: 0.86rem;
+    line-height: 1.45;
+    margin: 0;
+    flex-grow: 1;
+    overflow: hidden;
 }
 
-/* Student Profile Pill / Banner */
-.student-status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: #ecfdf5;
-    border: 1px solid #a7f3d0;
-    color: #065f46;
-    padding: 0.4rem 0.9rem;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
+/* ===================================================
+   Buttons Consistency & Alignment
+   =================================================== */
+.stButton > button,
+button[kind="primary"],
+button[kind="secondary"] {
+    border-radius: var(--radius-sm) !important;
+    font-weight: 600 !important;
+    font-size: 0.88rem !important;
+    min-height: 40px !important;
+    padding: 0.5rem 1rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.4rem !important;
+    transition: all 0.15s ease-in-out !important;
+    border: 1px solid var(--border-color) !important;
+    letter-spacing: -0.01em !important;
+    box-sizing: border-box !important;
 }
 
-/* Source Citation Card */
+.stButton > button:hover {
+    border-color: #1e40af !important;
+    color: #1e40af !important;
+    background: #eff6ff !important;
+}
+
+.stButton > button:active {
+    transform: scale(0.99) !important;
+}
+
+button[kind="primary"],
+.stButton > button[kind="primary"] {
+    background: #1e40af !important;
+    color: #ffffff !important;
+    border-color: #1e40af !important;
+}
+
+button[kind="primary"]:hover,
+.stButton > button[kind="primary"]:hover {
+    background: #1d4ed8 !important;
+    border-color: #1d4ed8 !important;
+    color: #ffffff !important;
+}
+
+/* ===================================================
+   Chat Message UI: Distinct Student vs CampusAI
+   =================================================== */
+[data-testid="stChatMessage"] {
+    padding: 0.95rem 1.15rem !important;
+    margin-bottom: 0.85rem !important;
+    border-radius: var(--radius-md) !important;
+    transition: all 0.2s ease !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    gap: 0.85rem !important;
+    align-items: flex-start !important;
+}
+
+[data-testid="stChatMessageContent"] {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    line-height: 1.55 !important;
+}
+
+[data-testid="stChatMessage"] .stChatMessageAvatar,
+[data-testid="stChatMessageAvatarUser"],
+[data-testid="stChatMessageAvatarAssistant"],
+[data-testid="stChatMessageAvatarCustom"] {
+    flex-shrink: 0 !important;
+    width: 36px !important;
+    height: 36px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1.25rem !important;
+}
+
+/* 👤 STUDENT / USER MESSAGE */
+div[data-testid="stChatMessage"]:has([aria-label*="user"]),
+div[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) {
+    flex-direction: row-reverse !important;
+    background: #f0f7ff !important;
+    border: 1px solid #bfdbfe !important;
+    border-right: 3.5px solid #2563eb !important;
+    border-radius: 14px 14px 3px 14px !important;
+    margin-left: auto !important;
+    margin-right: 0 !important;
+    max-width: 82% !important;
+    box-shadow: 0 1px 3px rgba(37, 99, 235, 0.05) !important;
+}
+
+div[data-testid="stChatMessage"]:has([aria-label*="user"]) [data-testid="stChatMessageContent"],
+div[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) [data-testid="stChatMessageContent"] {
+    text-align: left !important;
+    color: #0f2b48 !important;
+    font-weight: 500 !important;
+    font-size: 0.95rem !important;
+}
+
+div[data-testid="stChatMessage"]:has([aria-label*="user"]) [data-testid="stChatMessageAvatarUser"],
+div[data-testid="stChatMessage"]:has([aria-label*="user"]) [data-testid="stChatMessageAvatarCustom"],
+div[data-testid="stChatMessage"]:has([aria-label*="user"]) .stChatMessageAvatar {
+    background: #dbeafe !important;
+    border: 1.5px solid #93c5fd !important;
+    border-radius: 50% !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* 🤖 CAMPUSAI / ASSISTANT MESSAGE */
+div[data-testid="stChatMessage"]:has([aria-label*="assistant"]),
+div[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarAssistant"]) {
+    flex-direction: row !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-left: 3.5px solid #1e40af !important;
+    border-radius: 3px 14px 14px 14px !important;
+    margin-right: auto !important;
+    margin-left: 0 !important;
+    max-width: 96% !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
+}
+
+div[data-testid="stChatMessage"]:has([aria-label*="assistant"]) [data-testid="stChatMessageContent"],
+div[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarAssistant"]) [data-testid="stChatMessageContent"] {
+    color: #1e293b !important;
+    font-size: 0.95rem !important;
+    line-height: 1.62 !important;
+}
+
+div[data-testid="stChatMessage"]:has([aria-label*="assistant"]) [data-testid="stChatMessageAvatarAssistant"],
+div[data-testid="stChatMessage"]:has([aria-label*="assistant"]) [data-testid="stChatMessageAvatarCustom"],
+div[data-testid="stChatMessage"]:has([aria-label*="assistant"]) .stChatMessageAvatar {
+    background: #eff6ff !important;
+    border: 1.5px solid #bfdbfe !important;
+    border-radius: 10px !important;
+    box-shadow: 0 1px 2px rgba(30, 64, 175, 0.08) !important;
+}
+
+/* ===================================================
+   Source Citation Cards
+   =================================================== */
 .source-citation-card {
     background: #f8fafc;
-    border-left: 4px solid #3b82f6;
+    border-left: 3px solid #3b82f6;
     border-top: 1px solid #e2e8f0;
     border-right: 1px solid #e2e8f0;
     border-bottom: 1px solid #e2e8f0;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     padding: 0.75rem 1rem;
     margin-top: 0.6rem;
     margin-bottom: 0.6rem;
@@ -126,11 +352,12 @@ html, body, [class*="css"] {
 }
 
 .source-title {
-    font-weight: 700;
+    font-weight: 650;
     color: #1e40af;
     display: flex;
     align-items: center;
     gap: 0.4rem;
+    font-size: 0.86rem;
 }
 
 .source-excerpt {
@@ -138,6 +365,99 @@ html, body, [class*="css"] {
     font-style: italic;
     margin-top: 0.3rem;
     font-size: 0.82rem;
+    line-height: 1.5;
+}
+
+/* ===================================================
+   Sidebar Polish
+   =================================================== */
+[data-testid="stSidebar"] {
+    background-color: #f8fafc !important;
+    border-right: 1px solid #e2e8f0 !important;
+}
+
+[data-testid="stSidebarNav"] {
+    padding-top: 0.5rem;
+}
+
+[data-testid="stSidebarNavLink"] {
+    border-radius: var(--radius-sm) !important;
+    margin-bottom: 3px !important;
+    font-weight: 500 !important;
+    font-size: 0.92rem !important;
+    transition: all 0.15s ease !important;
+}
+
+[data-testid="stSidebarNavLink"]:hover {
+    background-color: #e2e8f0 !important;
+}
+
+[data-testid="stSidebarNavLink"][aria-selected="true"] {
+    background-color: #eff6ff !important;
+    color: #1e40af !important;
+    font-weight: 700 !important;
+}
+
+/* ===================================================
+   Badges, Stats & Form Inputs
+   =================================================== */
+.student-snapshot-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.25rem 1.4rem;
+    box-shadow: var(--shadow-sm);
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.student-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #065f46;
+    padding: 0.35rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.stat-box {
+    text-align: center;
+    padding: 1.15rem 0.8rem;
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-xs);
+    transition: border-color 0.2s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.stat-box:hover {
+    border-color: #cbd5e1;
+}
+
+.stat-number {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #1e40af;
+    line-height: 1.2;
+}
+
+.stat-label {
+    font-size: 0.78rem;
+    color: #64748b;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    margin-top: 0.2rem;
 }
 
 /* Quiz UI Components */
@@ -145,18 +465,19 @@ html, body, [class*="css"] {
     background: #ffffff;
     border: 1px solid #cbd5e1;
     border-radius: var(--radius-md);
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    box-shadow: var(--shadow-sm);
+    padding: 1.4rem;
+    margin-bottom: 1.4rem;
+    box-shadow: var(--shadow-xs);
 }
 
 .quiz-explanation-box {
     background: #eff6ff;
-    border-left: 4px solid #2563eb;
-    padding: 1rem;
-    border-radius: 4px;
+    border-left: 3.5px solid #2563eb;
+    padding: 0.9rem 1.1rem;
+    border-radius: var(--radius-sm);
     margin-top: 0.75rem;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
+    line-height: 1.55;
 }
 
 /* Notice Action Items */
@@ -165,32 +486,62 @@ html, body, [class*="css"] {
     background: #fef3c7;
     color: #92400e;
     font-weight: 600;
-    font-size: 0.8rem;
-    padding: 0.2rem 0.6rem;
+    font-size: 0.78rem;
+    padding: 0.2rem 0.55rem;
     border-radius: 4px;
     margin-right: 0.4rem;
 }
 
-/* Quick Stats Bar */
-.stat-box {
-    text-align: center;
-    padding: 1rem;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
+/* Form Controls */
+.stTextInput input, .stTextArea textarea {
+    border-radius: var(--radius-sm) !important;
+    border-color: var(--border-color) !important;
+    font-size: 0.9rem !important;
 }
 
-.stat-number {
-    font-size: 1.8rem;
-    font-weight: 800;
-    color: #1e40af;
+.stTextInput input:focus, .stTextArea textarea:focus {
+    border-color: var(--border-focus) !important;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15) !important;
 }
 
-.stat-label {
-    font-size: 0.82rem;
-    color: #64748b;
-    text-transform: uppercase;
-    font-weight: 600;
-    letter-spacing: 0.05em;
+/* ===================================================
+   Responsiveness
+   =================================================== */
+@media (max-width: 992px) {
+    .feature-card {
+        height: auto !important;
+        min-height: 200px !important;
+        max-height: none !important;
+        margin-bottom: 0.6rem;
+    }
+    div[data-testid="stChatMessage"]:has([aria-label*="user"]),
+    div[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) {
+        max-width: 90% !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .campus-header {
+        padding: 1.3rem 1.2rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.85rem;
+    }
+    .campus-header h1 {
+        font-size: 1.55rem !important;
+    }
+    .campus-header .header-student-card {
+        text-align: left;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .feature-card {
+        height: auto !important;
+        min-height: auto !important;
+        max-height: none !important;
+    }
+    div[data-testid="stChatMessage"]:has([aria-label*="user"]),
+    div[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) {
+        max-width: 98% !important;
+    }
 }

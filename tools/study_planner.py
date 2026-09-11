@@ -9,6 +9,7 @@ from utils.config import get_api_key, GEMINI_MODEL, is_api_key_set
 from memory.student_memory import StudentMemory
 from database.sqlite_db import save_study_plan
 from database.models import StudyPlan
+from utils.helpers import extract_text_from_response
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import SystemMessage, HumanMessage
@@ -94,7 +95,7 @@ class StudyPlannerTool:
                 SystemMessage(content=system_prompt),
                 HumanMessage(content=user_prompt)
             ])
-            plan_content = response.content
+            plan_content = extract_text_from_response(response.content)
         except Exception as e:
             return {
                 "success": False,

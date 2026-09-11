@@ -6,6 +6,7 @@ Extracts executive summaries, critical deadlines, dates, and actionable checklis
 from typing import Dict, Any
 from utils.config import get_api_key, GEMINI_MODEL, is_api_key_set
 from memory.student_memory import StudentMemory
+from utils.helpers import extract_text_from_response
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import SystemMessage, HumanMessage
@@ -77,7 +78,7 @@ class NoticeSummarizerTool:
             ])
             return {
                 "success": True,
-                "summary_markdown": response.content
+                "summary_markdown": extract_text_from_response(response.content)
             }
         except Exception as e:
             return {

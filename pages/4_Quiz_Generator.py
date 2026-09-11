@@ -32,7 +32,7 @@ def main():
     tab_test, tab_history = st.tabs(["🎯 Take Practice Quiz", "📊 Performance History"])
 
     with tab_test:
-        with st.expander("⚙️ Quiz Configuration & Material", expanded="quiz_data" not in st.session_state):
+        with st.expander("Quiz Configuration & Material", icon="⚙️", expanded="quiz_data" not in st.session_state):
             source_mode = st.radio(
                 "Source Material Option",
                 options=["Pre-filled Subject Topic", "Upload Lecture Notes (PDF)", "Paste Study Material / Notes"],

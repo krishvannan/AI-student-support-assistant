@@ -33,8 +33,8 @@ def main():
     vector_store = get_vector_store()
     rag_engine = CollegeAssistantRAG(session_id="student_session")
 
-    # Top Control Bar: Document Drawer & Memory Toggle
-    with st.expander("📂 Document Management & Settings", expanded=False):
+    # Top Control Bar: Document Drawer & Settings
+    with st.expander("Document Management & Settings", icon="📁", expanded=False):
         c1, c2 = st.columns([1, 1])
 
         with c1:
@@ -93,12 +93,12 @@ def main():
                     st.rerun()
 
     # Personalization and Options Bar
-    col_opt1, col_opt2, col_opt3 = st.columns([2, 1, 1])
+    col_opt1, col_opt2, col_opt3 = st.columns([2.2, 1.3, 0.9], vertical_alignment="bottom")
     with col_opt1:
         use_profile = st.checkbox(
-            f"🧠 Use Student Profile Memory ({profile.name}, Sem {profile.semester} {profile.department})",
+            f"🧠 Student Memory ({profile.name} • Sem {profile.semester})",
             value=True,
-            help="Personalizes responses using your enrolled department, semester, and subjects"
+            help=f"Active Profile: {profile.name} (Semester {profile.semester}, {profile.department}). Personalizes responses using your enrolled courses."
         )
     with col_opt2:
         top_k = st.slider("Context Chunks", min_value=2, max_value=8, value=4, help="Number of chunks retrieved from ChromaDB")
@@ -119,7 +119,7 @@ def main():
         if st.button("💼 Placement Drive?", key="q2", use_container_width=True):
             suggested_q = "What is the eligibility criteria and deadline for the Mega Placement Drive?"
     with chip_cols[2]:
-        if st.button("📚 My Semester Syllabus?", key="q3", use_container_width=True):
+        if st.button("📚 Semester Syllabus?", key="q3", use_container_width=True):
             suggested_q = "What subjects should I prioritize and what are the main units in my curriculum?"
     with chip_cols[3]:
         if st.button("⏰ Exam Timetable?", key="q4", use_container_width=True):
@@ -131,10 +131,10 @@ def main():
 
     for msg in history:
         if msg.sender == "user":
-            with st.chat_message("user", avatar="🎓"):
+            with st.chat_message("user", avatar="👤"):
                 st.markdown(msg.message)
         else:
-            with st.chat_message("assistant", avatar="🏛️"):
+            with st.chat_message("assistant", avatar="🤖"):
                 st.markdown(msg.message)
                 if msg.sources:
                     with st.expander(f"📚 Verified Sources ({len(msg.sources)} references)"):
@@ -156,32 +156,35 @@ def main():
 
     if final_query:
         # Display user message immediately
-        with st.chat_message("user", avatar="🎓"):
+        with st.chat_message("user", avatar="👤"):
             st.markdown(final_query)
 
         # Process with RAG Assistant
-        with st.chat_message("assistant", avatar="🏛️"):
+        with st.chat_message("assistant", avatar="🤖"):
             with st.spinner("Searching college knowledge base and generating answer..."):
-                response = rag_engine.query(
-                    user_question=final_query,
-                    k=top_k,
-                    use_memory=True,
-                    use_student_profile=use_profile
-                )
-                st.markdown(response["answer"])
+                try:
+                    response = rag_engine.query(
+                        user_question=final_query,
+                        k=top_k,
+                        use_memory=True,
+                        use_student_profile=use_profile
+                    )
+                    st.markdown(response["answer"])
 
-                if response.get("sources"):
-                    with st.expander(f"📚 Verified Sources ({len(response['sources'])} references)"):
-                        for s in response["sources"]:
-                            st.markdown(
-                                f"""
-                                <div class="source-citation-card">
-                                    <div class="source-title">📄 {s.get('source')} (Page {s.get('page')})</div>
-                                    <div class="source-excerpt">"{s.get('snippet')}"</div>
-                                </div>
-                                """,
-                                unsafe_allow_html=True
-                            )
+                    if response.get("sources"):
+                        with st.expander(f"📚 Verified Sources ({len(response['sources'])} references)"):
+                            for s in response["sources"]:
+                                st.markdown(
+                                    f"""
+                                    <div class="source-citation-card">
+                                        <div class="source-title">📄 {s.get('source')} (Page {s.get('page')})</div>
+                                        <div class="source-excerpt">"{s.get('snippet')}"</div>
+                                    </div>
+                                    """,
+                                    unsafe_allow_html=True
+                                )
+                except Exception as e:
+                    st.error(f"Error querying assistant: {str(e)}")
 
         st.rerun()
 

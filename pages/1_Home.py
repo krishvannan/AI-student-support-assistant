@@ -37,7 +37,7 @@ def main():
     with col_profile:
         st.markdown(
             f"""
-            <div class="feature-card" style="border-left: 4px solid #1e40af;">
+            <div class="student-snapshot-card" style="border-left: 4px solid #1e40af;">
                 <div style="font-size: 1.15rem; font-weight: 700; color: #1e40af;">{profile.name}</div>
                 <div style="font-size: 0.9rem; color: #475569; margin-top: 0.2rem;">
                     🎓 <b>{profile.department}</b> • Semester {profile.semester}

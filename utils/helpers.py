@@ -28,16 +28,17 @@ def load_css() -> None:
 def render_header(title: str, subtitle: str, icon: str = "🎓") -> None:
     """Render a consistent header banner with university styling."""
     profile = StudentMemory.get_profile()
+    dept_short = profile.department if len(profile.department) <= 24 else profile.department[:22] + "..."
     st.markdown(
         f"""
         <div class="campus-header">
-            <div>
+            <div class="header-main">
                 <h1>{icon} {title}</h1>
                 <p>{subtitle}</p>
             </div>
-            <div style="text-align: right; font-size: 0.9rem; background: rgba(255,255,255,0.12); padding: 0.6rem 1.2rem; border-radius: 12px; backdrop-filter: blur(4px);">
-                <div style="font-weight: 700; color: #f8fafc;">{profile.name}</div>
-                <div style="color: #93c5fd; font-size: 0.82rem;">{profile.department} • Sem {profile.semester}</div>
+            <div class="header-student-card">
+                <div class="header-student-name">{profile.name}</div>
+                <div class="header-student-meta">{dept_short} • Sem {profile.semester}</div>
             </div>
         </div>
         """,
@@ -50,10 +51,10 @@ def render_shared_sidebar() -> None:
     # Branding
     st.sidebar.markdown(
         """
-        <div style="text-align: center; padding: 0.5rem 0 1rem 0;">
-            <div style="font-size: 2.2rem;">🏛️</div>
-            <h2 style="margin: 0; color: #1e40af; font-weight: 800; font-size: 1.4rem;">CampusAI</h2>
-            <p style="margin: 0; color: #64748b; font-size: 0.8rem; font-weight: 500;">Intelligent Student Support</p>
+        <div style="text-align: center; padding: 0.4rem 0 0.9rem 0;">
+            <div style="font-size: 2.1rem; line-height: 1;">🏛️</div>
+            <h2 style="margin: 0.2rem 0 0 0; color: #1e40af; font-weight: 700; font-size: 1.35rem; letter-spacing: -0.02em;">CampusAI</h2>
+            <p style="margin: 0.1rem 0 0 0; color: #64748b; font-size: 0.82rem; font-weight: 500;">Student Support Assistant</p>
         </div>
         """,
         unsafe_allow_html=True
@@ -64,9 +65,9 @@ def render_shared_sidebar() -> None:
     dept_short = profile.department if len(profile.department) <= 24 else profile.department[:22] + "..."
     st.sidebar.markdown(
         f"""
-        <div style="background: #f1f5f9; border-radius: 10px; padding: 0.75rem 1rem; margin-bottom: 1.2rem; border: 1px solid #e2e8f0;">
-            <div style="font-size: 0.75rem; text-transform: uppercase; color: #64748b; font-weight: 700;">Active Student</div>
-            <div style="font-size: 0.95rem; font-weight: 700; color: #0f172a;">{profile.name}</div>
+        <div style="background: #ffffff; border-radius: 10px; padding: 0.75rem 1rem; margin-bottom: 1.1rem; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);">
+            <div style="font-size: 0.72rem; text-transform: uppercase; color: #64748b; font-weight: 700; letter-spacing: 0.05em;">Active Student</div>
+            <div style="font-size: 0.95rem; font-weight: 700; color: #0f172a; margin-top: 0.1rem;">{profile.name}</div>
             <div style="font-size: 0.8rem; color: #475569;">Sem {profile.semester} • {dept_short}</div>
         </div>
         """,
@@ -120,3 +121,24 @@ def setup_page(title: str, subtitle: str, icon: str = "🎓") -> None:
     load_css()
     render_shared_sidebar()
     render_header(title, subtitle, icon)
+
+
+def extract_text_from_response(content) -> str:
+    """
+    Extract clean string from LangChain Gemini response content,
+    which may be a string or list of content dictionaries.
+    """
+    if isinstance(content, str):
+        return content.strip()
+    if isinstance(content, list):
+        parts = []
+        for item in content:
+            if isinstance(item, dict) and "text" in item:
+                parts.append(item["text"])
+            elif isinstance(item, str):
+                parts.append(item)
+            else:
+                parts.append(str(item))
+        return "\n".join(parts).strip()
+    return str(content).strip()
+

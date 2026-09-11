@@ -8,6 +8,7 @@ from utils.config import get_api_key, GEMINI_MODEL, is_api_key_set
 from rag.vectorstore import get_vector_store
 from memory.student_memory import StudentMemory
 from memory.chat_memory import ChatMemoryManager
+from utils.helpers import extract_text_from_response
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import SystemMessage, HumanMessage
@@ -133,7 +134,7 @@ class CollegeAssistantRAG:
                 SystemMessage(content=system_instruction),
                 HumanMessage(content=user_content)
             ])
-            answer = response.content
+            answer = extract_text_from_response(response.content)
         except Exception as e:
             answer = (
                 f"⚠️ **Error communicating with Google Gemini API**: {str(e)}\n\n"

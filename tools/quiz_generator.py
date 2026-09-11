@@ -10,6 +10,7 @@ from utils.config import get_api_key, GEMINI_MODEL, is_api_key_set
 from memory.student_memory import StudentMemory
 from database.sqlite_db import save_quiz_record
 from database.models import QuizRecord
+from utils.helpers import extract_text_from_response
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import SystemMessage, HumanMessage
@@ -95,7 +96,7 @@ class QuizGeneratorTool:
                 SystemMessage(content=system_prompt),
                 HumanMessage(content=user_prompt)
             ])
-            raw_output = response.content
+            raw_output = extract_text_from_response(response.content)
 
             # Parse JSON
             cleaned_json = cls._clean_json_output(raw_output)

@@ -129,7 +129,7 @@ def main():
             st.info("No saved study plans found in SQLite database yet.")
         else:
             for plan in saved_plans:
-                with st.expander(f"📌 Exam on {plan.exam_date} ({plan.daily_hours} hrs/day) — Created: {plan.created_at[:10]}"):
+                with st.expander(f"Exam on {plan.exam_date} ({plan.daily_hours} hrs/day) — Created: {plan.created_at[:10]}", icon="📌"):
                     st.write(f"**Subjects:** {plan.subjects}")
                     st.markdown(plan.plan_content)
                     st.download_button(

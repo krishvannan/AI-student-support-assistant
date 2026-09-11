@@ -61,8 +61,7 @@ CampusAI Architecture
 │   ├── 📅 Study Planner: AI schedule generation, priority matrix, downloadable timetable
 │   ├── 📝 Quiz Generator: Dynamic MCQ generator from notes/syllabus with interactive test mode
 │   ├── 📄 Notice Summarizer: Key highlights, deadline extractor, actionable checklist
-│   ├── 👤 Student Profile: SQLite-backed profile (dept, semester, subjects, target GPA)
-│   └── ℹ About: System architecture diagram, viva/demo guide, tech stack
+│   └── 👤 Student Profile: SQLite-backed profile (dept, semester, subjects, target GPA)
 │
 ├── Intelligence & Tool Layer (LangChain + Google Gemini)
 │   ├── RAG Engine: PDF Document Loader -> Recursive Splitter -> Gemini Embeddings -> ChromaDB
@@ -93,8 +92,7 @@ CampusAI/
 │   ├── 3_Study_Planner.py   # AI Timetable generator
 │   ├── 4_Quiz_Generator.py  # Interactive MCQ test generator
 │   ├── 5_Notice_Summarizer.py # Circular & Notice summarizer
-│   ├── 6_Student_Profile.py # Student profile SQLite manager
-│   └── 7_About.py           # Architecture & viva documentation
+│   └── 6_Student_Profile.py # Student profile SQLite manager
 │
 ├── rag/                     # Retrieval-Augmented Generation Engine
 │   ├── __init__.py

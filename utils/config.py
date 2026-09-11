@@ -25,8 +25,8 @@ CHROMA_PERSIST_DIR = Path(os.getenv("CHROMA_PERSIST_DIR", str(DEFAULT_CHROMA_DIR
 DOCUMENTS_DIR = Path(os.getenv("DOCUMENTS_DIR", str(DEFAULT_DOCS_DIR)))
 
 # AI Models
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-1.5-flash")
-EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "models/text-embedding-004")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.6-flash")
+EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "models/gemini-embedding-001")
 
 # In-memory API key override (for when user inputs key in Streamlit UI)
 _runtime_api_key = None

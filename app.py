@@ -23,6 +23,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from database.sqlite_db import init_db
 from utils.config import ensure_directories
+from utils.helpers import load_css
 
 # Configure Streamlit page settings (must be the first Streamlit command)
 st.set_page_config(
@@ -35,6 +36,7 @@ st.set_page_config(
 # Initialize database and system directories
 ensure_directories()
 init_db()
+load_css()
 
 # Define Official Streamlit Multipage Navigation
 home_page = st.Page("pages/1_Home.py", title="Home", icon="🏠", default=True)
@@ -43,7 +45,6 @@ planner_page = st.Page("pages/3_Study_Planner.py", title="Study Planner", icon="
 quiz_page = st.Page("pages/4_Quiz_Generator.py", title="Quiz Generator", icon="📝")
 summarizer_page = st.Page("pages/5_Notice_Summarizer.py", title="Notice Summarizer", icon="📄")
 profile_page = st.Page("pages/6_Student_Profile.py", title="Student Profile", icon="👤")
-about_page = st.Page("pages/7_About.py", title="About", icon="ℹ️")
 
 # Build navigation structure
 pg = st.navigation(
@@ -53,8 +54,7 @@ pg = st.navigation(
         planner_page,
         quiz_page,
         summarizer_page,
-        profile_page,
-        about_page
+        profile_page
     ]
 )
 
