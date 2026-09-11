@@ -105,22 +105,23 @@ def main():
             st.caption("Select the best answer for each question and submit when finished.")
 
             # Form for answering questions
-            with st.form("quiz_taking_form"):
+            with st.form("quiz_taking_form", border=False):
                 user_selections = {}
 
                 for i, q in enumerate(questions):
-                    st.markdown(f"#### Q{i+1}: {q.get('question')}")
-                    options = q.get("options", [])
+                    with st.container(border=True, key=f"quiz_card_{i}"):
+                        st.markdown(f"#### Q{i+1}: {q.get('question')}")
+                        options = q.get("options", [])
 
-                    # Radio button for choices
-                    selected = st.radio(
-                        f"Choose your answer for Q{i+1}:",
-                        options=options,
-                        index=None,
-                        key=f"q_choice_{i}"
-                    )
-                    user_selections[i] = selected
-                    st.markdown("<hr style='margin: 1rem 0; border: none; border-top: 1px dashed #cbd5e1;'>", unsafe_allow_html=True)
+                        # Radio button for choices
+                        selected = st.radio(
+                            f"Choose your answer for Q{i+1}:",
+                            options=options,
+                            index=None,
+                            key=f"q_choice_{i}",
+                            label_visibility="collapsed"
+                        )
+                        user_selections[i] = selected
 
                 submit_test = st.form_submit_button("🏁 Submit Test & Grade Answers", use_container_width=True)
 
@@ -137,38 +138,38 @@ def main():
                 st.markdown("## 📊 Assessment Results & Detailed Feedback")
 
                 for i, q in enumerate(questions):
-                    user_ans = user_selections.get(i)
-                    correct_ans = q.get("correct_answer")
-                    correct_idx = q.get("correct_option_index")
-                    options = q.get("options", [])
+                    with st.container(border=True, key=f"quiz_result_card_{i}"):
+                        user_ans = user_selections.get(i)
+                        correct_ans = q.get("correct_answer")
+                        correct_idx = q.get("correct_option_index")
+                        options = q.get("options", [])
 
-                    # Identify correct option string
-                    if correct_idx is not None and 0 <= correct_idx < len(options):
-                        expected_ans = options[correct_idx]
-                    else:
-                        expected_ans = str(correct_ans)
+                        # Identify correct option string
+                        if correct_idx is not None and 0 <= correct_idx < len(options):
+                            expected_ans = options[correct_idx]
+                        else:
+                            expected_ans = str(correct_ans)
 
-                    is_correct = (user_ans == expected_ans) or (user_ans and correct_ans and str(user_ans).strip().lower() == str(correct_ans).strip().lower())
+                        is_correct = (user_ans == expected_ans) or (user_ans and correct_ans and str(user_ans).strip().lower() == str(correct_ans).strip().lower())
 
-                    if is_correct:
-                        correct_count += 1
-                        st.markdown(f"✅ **Question {i+1}: Correct!**")
-                        st.markdown(f"**Your Answer:** `{user_ans}`")
-                    else:
-                        st.markdown(f"❌ **Question {i+1}: Incorrect**")
-                        st.markdown(f"- Your Answer: `{user_ans or 'No Answer Selected'}`")
-                        st.markdown(f"- **Correct Answer:** `{expected_ans}`")
+                        if is_correct:
+                            correct_count += 1
+                            st.markdown(f"✅ **Question {i+1}: Correct!**")
+                            st.markdown(f"**Your Answer:** `{user_ans}`")
+                        else:
+                            st.markdown(f"❌ **Question {i+1}: Incorrect**")
+                            st.markdown(f"- Your Answer: `{user_ans or 'No Answer Selected'}`")
+                            st.markdown(f"- **Correct Answer:** `{expected_ans}`")
 
-                    # Explanation block
-                    st.markdown(
-                        f"""
-                        <div class="quiz-explanation-box">
-                            <b>💡 Academic Explanation:</b><br/>{q.get('explanation', 'No explanation provided.')}
-                        </div>
-                        <br>
-                        """,
-                        unsafe_allow_html=True
-                    )
+                        # Explanation block
+                        st.markdown(
+                            f"""
+                            <div class="quiz-explanation-box">
+                                <b>💡 Academic Explanation:</b><br/>{q.get('explanation', 'No explanation provided.')}
+                            </div>
+                            """,
+                            unsafe_allow_html=True
+                        )
 
                 score_pct = (correct_count / len(questions)) * 100
                 st.markdown(f"### 🏆 Final Score: **{correct_count} / {len(questions)} ({score_pct:.1f}%)**")

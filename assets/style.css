@@ -460,14 +460,123 @@ div[data-testid="stChatMessage"]:has([aria-label*="assistant"]) .stChatMessageAv
     margin-top: 0.2rem;
 }
 
-/* Quiz UI Components */
-.quiz-question-box {
-    background: #ffffff;
-    border: 1px solid #cbd5e1;
-    border-radius: var(--radius-md);
-    padding: 1.4rem;
-    margin-bottom: 1.4rem;
-    box-shadow: var(--shadow-xs);
+/* ===================================================
+   Quiz Assessment Cards, Questions & Options
+   =================================================== */
+.quiz-question-box,
+div[class*="st-key-quiz_card"],
+div[class*="st-key-quiz_result_card"] {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    padding: 1.25rem 1.4rem !important;
+    margin-bottom: 1.1rem !important;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+div[class*="st-key-quiz_card"]:hover {
+    border-color: #cbd5e1 !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.07) !important;
+}
+
+/* Quiz Question Title: 20-22px, Semibold (600), Line-Height 1.45 */
+div[class*="st-key-quiz_card"] h4,
+div[class*="st-key-quiz_result_card"] h4,
+div[data-testid="stForm"] h4 {
+    font-size: 21px !important;
+    font-weight: 600 !important;
+    line-height: 1.45 !important;
+    color: #1e293b !important;
+    margin: 0 0 0.85rem 0 !important;
+    letter-spacing: -0.01em !important;
+}
+
+/* Mathematical formulas and KaTeX inside question heading */
+div[class*="st-key-quiz_card"] h4 .katex,
+div[class*="st-key-quiz_result_card"] h4 .katex,
+div[data-testid="stForm"] h4 .katex {
+    font-size: 1.02em !important;
+    font-weight: normal !important;
+    letter-spacing: normal !important;
+}
+
+/* Radio Group in Quiz Cards */
+div[class*="st-key-quiz_card"] div[data-testid="stRadio"],
+div[data-testid="stForm"] div[data-testid="stRadio"] {
+    margin: 0.25rem 0 !important;
+    padding: 0 !important;
+}
+
+div[class*="st-key-quiz_card"] div[data-testid="stRadioGroup"],
+div[data-testid="stForm"] div[data-testid="stRadioGroup"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.55rem !important;
+}
+
+/* Answer Option Container: clean padding, hover effect, alignment */
+div[class*="st-key-quiz_card"] [data-testid="stRadioOption"],
+div[data-testid="stForm"] [data-testid="stRadioOption"] {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+div[class*="st-key-quiz_card"] [data-testid="stRadioOption"] > div > div,
+div[data-testid="stForm"] [data-testid="stRadioOption"] > div > div {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    padding: 0.55rem 0.85rem !important;
+    border-radius: 8px !important;
+    border: 1px solid #e2e8f0 !important;
+    background-color: #f8fafc !important;
+    transition: all 0.15s ease-in-out !important;
+    cursor: pointer !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+}
+
+div[class*="st-key-quiz_card"] [data-testid="stRadioOption"]:hover > div > div,
+div[data-testid="stForm"] [data-testid="stRadioOption"]:hover > div > div {
+    background-color: #f1f5f9 !important;
+    border-color: #93c5fd !important;
+}
+
+div[class*="st-key-quiz_card"] [data-testid="stRadioOption"]:has(input:checked) > div > div,
+div[data-testid="stForm"] [data-testid="stRadioOption"]:has(input:checked) > div > div {
+    background-color: #eff6ff !important;
+    border-color: #3b82f6 !important;
+}
+
+/* Answer Option Typography: 16.5px (approx 16-17px) */
+div[class*="st-key-quiz_card"] [data-testid="stRadioOption"] [data-testid="stMarkdownContainer"] p,
+div[class*="st-key-quiz_card"] [data-testid="stRadioOption"] label p,
+div[class*="st-key-quiz_card"] [data-testid="stRadioOption"] p,
+div[class*="st-key-quiz_card"] [data-testid="stRadioOption"] span,
+div[data-testid="stForm"] [data-testid="stRadioOption"] [data-testid="stMarkdownContainer"] p,
+div[data-testid="stForm"] [data-testid="stRadioOption"] label p,
+div[data-testid="stForm"] [data-testid="stRadioOption"] p,
+div[data-testid="stForm"] [data-testid="stRadioOption"] span {
+    font-size: 16.5px !important;
+    font-weight: 450 !important;
+    line-height: 1.5 !important;
+    color: #1e293b !important;
+    margin: 0 !important;
+}
+
+/* Vertical alignment: radio circle with option text */
+div[class*="st-key-quiz_card"] [data-testid="stRadioOption"] > div > div > div:first-child,
+div[data-testid="stForm"] [data-testid="stRadioOption"] > div > div > div:first-child {
+    flex-shrink: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* Mathematical formulas / KaTeX inside answer options */
+div[class*="st-key-quiz_card"] [data-testid="stRadioOption"] .katex,
+div[data-testid="stForm"] [data-testid="stRadioOption"] .katex {
+    font-size: 1.02em !important;
 }
 
 .quiz-explanation-box {
@@ -476,8 +585,33 @@ div[data-testid="stChatMessage"]:has([aria-label*="assistant"]) .stChatMessageAv
     padding: 0.9rem 1.1rem;
     border-radius: var(--radius-sm);
     margin-top: 0.75rem;
-    font-size: 0.88rem;
+    font-size: 0.92rem;
     line-height: 1.55;
+    color: #1e293b;
+}
+
+/* Responsive Scaling for Mobile & Tablets */
+@media (max-width: 640px) {
+    div[class*="st-key-quiz_card"],
+    div[class*="st-key-quiz_result_card"] {
+        padding: 1rem 1.1rem !important;
+    }
+    div[class*="st-key-quiz_card"] h4,
+    div[class*="st-key-quiz_result_card"] h4,
+    div[data-testid="stForm"] h4 {
+        font-size: 18.5px !important;
+        line-height: 1.4 !important;
+    }
+    div[class*="st-key-quiz_card"] [data-testid="stRadioOption"] [data-testid="stMarkdownContainer"] p,
+    div[class*="st-key-quiz_card"] [data-testid="stRadioOption"] p,
+    div[data-testid="stForm"] [data-testid="stRadioOption"] [data-testid="stMarkdownContainer"] p,
+    div[data-testid="stForm"] [data-testid="stRadioOption"] p {
+        font-size: 15.5px !important;
+    }
+    div[class*="st-key-quiz_card"] [data-testid="stRadioOption"] > div > div,
+    div[data-testid="stForm"] [data-testid="stRadioOption"] > div > div {
+        padding: 0.45rem 0.65rem !important;
+    }
 }
 
 /* Notice Action Items */
